@@ -1,0 +1,37 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #e0e0e6;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.extra-links {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.feed {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: minmax(100px, max-content)
+                       repeat(auto-fill, 200px) 20%;
+}
+
+
