@@ -19,6 +19,7 @@ export async function fetchData(): Promise<void> {
   const { items: repos } = await data;
   console.log(repos)
   displayItems(repos);
+
 }
 
 
