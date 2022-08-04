@@ -1,5 +1,22 @@
 import './style.css'
 
+interface User {
+  avatar_url: string,
+}
+
+interface GithubIssue {
+  id: string,
+  author_association: string,
+  closed_at: string
+  comments: number
+  comments_url: string
+  created_at: Date,
+  events_url: string,
+  html_url: string
+  user: User,
+  body: string,
+  title: string
+}
 
 fetchData();
 
@@ -14,36 +31,41 @@ export async function fetchData(): Promise<void> {
   const page = (<HTMLSelectElement>document.getElementById('page'))!.value;
   const href = 'https://api.github.com/search/issues';
   const requestUrl = `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + order}`;
-  console.log(requestUrl);
   const data = (await fetch(requestUrl)).json()
   const { items: repos } = await data;
-  console.log(repos)
   displayItems(repos);
-
 }
 
-
-export const displayItems: CallableFunction = (githubIssues: any[]) => {
-  const charactersDiv = document.createElement('div');
-  charactersDiv.className = 'feed';
-  document.body.appendChild(charactersDiv)
-  githubIssues.forEach((item: any) => {
-    let avatar = document.createElement('img');
+export const displayItems: CallableFunction = (githubIssues: GithubIssue[]) => {
+  const repoCardContainer = document.createElement('div');
+  repoCardContainer.className = 'feed';
+  document.body.appendChild(repoCardContainer)
+  githubIssues.forEach((item: GithubIssue) => {
+    const repoCard: HTMLDivElement = document.createElement('div')
+    const avatar: HTMLImageElement = document.createElement('img');
+    const description: HTMLParagraphElement = document.createElement('p');
+    description.textContent = item.title;
     avatar.src = item.user.avatar_url
-    avatar.onclick = () => {
-      console.log(avatar.src)
+    repoCard.onclick = () => {
+      console.log(item.id)
     }
-    charactersDiv.append(avatar);
+    repoCard.className = 'repoCard'
+    repoCard.append(avatar);
+    repoCard.append(description)
+    repoCardContainer.append(repoCard)
   })
 };
 
-const test = () => {
-  console.log('called')
-}
 
 const order = document.querySelector('.order');
-
 order?.addEventListener('change', () => fetchData())
+
+const searchInput = document.getElementById('page');
+
+searchInput?.addEventListener('focusin', () => console.log('focused in'))
+
+searchInput?.addEventListener('focusout', () => console.log('focused out'))
+
 
 
 
