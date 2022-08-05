@@ -39,7 +39,7 @@ body {
     place-items: center;
     grid-template-columns: minmax(100px, max-content)
                        repeat(auto-fill, 200px) 20%;
-    gap: 10px;
+    gap: 15px;
 }
 
 
